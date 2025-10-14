@@ -1,0 +1,134 @@
+# ===================================================================
+# CONFIGURACIÓN CENTRALIZADA DEL PROYECTO LSP (Lengua de Señas Peruana)
+# ===================================================================
+
+# CONFIGURACIÓN DEL MODELO
+model:
+  # Número de frames que procesa el modelo (secuencia fija)
+  frames: 15
+  # Longitud del vector de keypoints (pose + face + hands)
+  keypoints_length: 1662
+  # Cantidad mínima de frames para considerar una seña válida
+  min_length_frames: 5
+  # Nombre del archivo del modelo entrenado
+  model_filename: "actions_15.keras"
+
+# CONFIGURACIÓN DE CAPTURA
+capture:
+  # Frames ignorados al inicio/fin de cada captura
+  margin_frame: 1
+  # Frames de espera antes de detener captura cuando no hay manos
+  delay_frames: 3
+  # Calidad de compresión JPEG (0-100, mayor = mejor calidad)
+  jpeg_quality: 50
+
+# CONFIGURACIÓN DE ENTRENAMIENTO
+training:
+  # Número máximo de épocas
+  epochs: 500
+  # Tamaño del batch
+  batch_size: 8
+  # Porcentaje de datos para validación (0.05 = 5%)
+  validation_split: 0.05
+  # Paciencia para early stopping
+  early_stopping_patience: 10
+  # Seed para reproducibilidad
+  random_seed: 42
+
+# CONFIGURACIÓN DE EVALUACIÓN
+evaluation:
+  # Umbral de confianza mínimo para aceptar predicción (0.0-1.0)
+  confidence_threshold: 0.8
+
+# ARQUITECTURA DE LA RED NEURONAL
+network:
+  # Primera capa LSTM
+  lstm1_units: 64
+  lstm1_l2: 0.01
+  lstm1_dropout: 0.5
+  
+  # Segunda capa LSTM
+  lstm2_units: 128
+  lstm2_l2: 0.001
+  lstm2_dropout: 0.5
+  
+  # Capas densas
+  dense1_units: 64
+  dense1_l2: 0.001
+  dense2_units: 64
+  dense2_l2: 0.001
+  
+  # Optimizador y función de pérdida
+  optimizer: "adam"
+  loss: "categorical_crossentropy"
+  metrics: ["accuracy"]
+
+# CONFIGURACIÓN DE VISUALIZACIÓN
+display:
+  font: "FONT_HERSHEY_PLAIN"  # OpenCV font
+  font_size: 1.5
+  font_position: [5, 30]
+  
+# ESTRUCTURA DE DIRECTORIOS
+paths:
+  # Carpetas principales
+  frame_actions: "frame_actions"
+  data: "data"
+  models: "models"
+  keypoints: "data/keypoints"
+  
+  # Archivos específicos
+  data_json: "data/data.json"
+  words_json: "models/words.json"
+
+# PALABRAS DEL VOCABULARIO LSP
+vocabulary:
+  word_ids:
+    - "adios"
+    - "bien"
+    - "buenas_noches"
+    - "buenas_tardes"
+    - "buenos_dias"
+    - "como_estas"
+    - "disculpa"
+    - "gracias"
+    - "hola-der"
+    - "hola-izq"
+    - "mal"
+    - "mas_o_menos"
+    - "me_ayudas"
+    - "por_favor"
+  
+  # Mapeo de IDs a texto legible
+  word_labels:
+    adios: "ADIÓS"
+    bien: "BIEN"
+    buenas_noches: "BUENAS NOCHES"
+    buenas_tardes: "BUENAS TARDES"
+    buenos_dias: "BUENOS DÍAS"
+    como_estas: "CÓMO ESTÁS"
+    disculpa: "DISCULPA"
+    gracias: "GRACIAS"
+    hola: "HOLA"  # Base para hola-der y hola-izq
+    mal: "MAL"
+    mas_o_menos: "MÁS O MENOS"
+    me_ayudas: "ME AYUDAS"
+    por_favor: "POR FAVOR"
+
+# CONFIGURACIÓN DE TEXT-TO-SPEECH
+tts:
+  language: "es"  # Español
+  audio_filename: "speech.mp3"
+
+# CONFIGURACIÓN DEL SERVIDOR
+server:
+  host: "0.0.0.0"
+  port: 5000
+  debug: true
+  upload_folder: "tmp"
+
+# MEDIAPIPE CONFIGURATION
+mediapipe:
+  # Confidence thresholds
+  min_detection_confidence: 0.5
+  min_tracking_confidence: 0.5

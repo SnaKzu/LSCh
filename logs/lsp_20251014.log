@@ -1,0 +1,18 @@
+2025-10-14 19:30:25 | root                      | [32mINFO[0m | ======================================================================
+2025-10-14 19:30:25 | root                      | [32mINFO[0m | Sistema de Logging Inicializado
+2025-10-14 19:30:25 | root                      | [32mINFO[0m | Nivel: INFO
+2025-10-14 19:30:25 | root                      | [32mINFO[0m | Archivo: C:\Users\Diego\Documents\test6\modelo_lstm_lsp-main\logs\lsp_20251014.log
+2025-10-14 19:30:25 | root                      | [32mINFO[0m | ======================================================================
+2025-10-14 19:30:25 | __main__                  | [32mINFO[0m | Inicializando aplicación GUI LSP
+2025-10-14 19:30:30 | __main__                  | [32mINFO[0m | Cámara inicializada correctamente
+2025-10-14 19:30:30 | tensorflow                | [33mWARNING[0m | From C:\Users\Diego\AppData\Roaming\Python\Python310\site-packages\keras\src\backend.py:1398: The name tf.executing_eagerly_outside_functions is deprecated. Please use tf.compat.v1.executing_eagerly_outside_functions instead.
+
+2025-10-14 19:32:01 | root                      | [32mINFO[0m | ======================================================================
+2025-10-14 19:32:01 | root                      | [32mINFO[0m | Sistema de Logging Inicializado
+2025-10-14 19:32:01 | root                      | [32mINFO[0m | Nivel: INFO
+2025-10-14 19:32:01 | root                      | [32mINFO[0m | Archivo: C:\Users\Diego\Documents\test6\modelo_lstm_lsp-main\logs\lsp_20251014.log
+2025-10-14 19:32:01 | root                      | [32mINFO[0m | ======================================================================
+2025-10-14 19:32:01 | __main__                  | [32mINFO[0m | Inicializando aplicación GUI LSP
+2025-10-14 19:32:05 | __main__                  | [32mINFO[0m | Cámara inicializada correctamente
+2025-10-14 19:32:06 | tensorflow                | [33mWARNING[0m | From C:\Users\Diego\AppData\Roaming\Python\Python310\site-packages\keras\src\backend.py:1398: The name tf.executing_eagerly_outside_functions is deprecated. Please use tf.compat.v1.executing_eagerly_outside_functions instead.
+
