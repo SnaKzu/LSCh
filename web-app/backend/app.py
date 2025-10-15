@@ -28,6 +28,7 @@ config = ConfigManager()
 
 app = Flask(__name__, 
             static_folder='../frontend',
+            static_url_path='',
             template_folder='../frontend')
 app.config['SECRET_KEY'] = 'lsp-secret-key-2025'
 app.config['UPLOAD_FOLDER'] = 'uploads'
@@ -63,6 +64,24 @@ def index():
 def demo():
     """Página de demo interactivo"""
     return send_from_directory('../frontend', 'demo.html')
+
+
+@app.route('/css/<path:filename>')
+def serve_css(filename):
+    """Servir archivos CSS"""
+    return send_from_directory('../frontend/css', filename)
+
+
+@app.route('/js/<path:filename>')
+def serve_js(filename):
+    """Servir archivos JavaScript"""
+    return send_from_directory('../frontend/js', filename)
+
+
+@app.route('/favicon.ico')
+def favicon():
+    """Servir favicon"""
+    return send_from_directory('../frontend', 'favicon.ico')
 
 
 @app.route('/api/health', methods=['GET'])
