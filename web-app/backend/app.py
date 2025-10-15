@@ -1,6 +1,7 @@
 """
 Backend Flask para LSP Web Application
 Reconocimiento de Lengua de Señas Peruana en tiempo real
+Con autenticación de usuarios
 """
 
 import os
@@ -8,9 +9,11 @@ import sys
 import cv2
 import base64
 import numpy as np
-from flask import Flask, render_template, request, jsonify, send_from_directory
+from datetime import datetime
+from flask import Flask, render_template, request, jsonify, send_from_directory, redirect, url_for, flash
 from flask_cors import CORS
 from flask_socketio import SocketIO, emit
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 import mediapipe as mp
 
 # Añadir directorio raíz al path para imports
@@ -22,6 +25,9 @@ from evaluate_model import normalize_keypoints
 from config_manager import ConfigManager
 from logger_config import get_logger
 
+# Importar modelos de base de datos
+from models import db, User, Prediction
+
 # Configuración
 logger = get_logger(__name__)
 config = ConfigManager()
@@ -30,12 +36,29 @@ app = Flask(__name__,
             static_folder='../frontend',
             static_url_path='',
             template_folder='../frontend')
-app.config['SECRET_KEY'] = 'lsp-secret-key-2025'
+app.config['SECRET_KEY'] = 'lsp-secret-key-2025-change-this-in-production'
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max
 
+# Configuración de base de datos
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../lsp_users.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Inicializar extensiones
+db.init_app(app)
 CORS(app)
 socketio = SocketIO(app, cors_allowed_origins="*")
+
+# Configurar Flask-Login
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+login_manager.login_message = 'Por favor inicia sesión para acceder a esta página'
+login_manager.login_message_category = 'error'
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 # Inicializar MediaPipe y Modelo
 holistic_model = mp.solutions.holistic.Holistic(
@@ -57,13 +80,160 @@ sessions = {}
 @app.route('/')
 def index():
     """Página principal"""
-    return send_from_directory('../frontend', 'index.html')
+    return render_template('index.html')
 
 
 @app.route('/demo')
+@login_required
 def demo():
-    """Página de demo interactivo"""
+    """Página de demo interactivo - requiere login"""
     return send_from_directory('../frontend', 'demo.html')
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    """Página de login"""
+    if current_user.is_authenticated:
+        return redirect(url_for('dashboard'))
+    
+    if request.method == 'POST':
+        username = request.form.get('username', '').strip()
+        password = request.form.get('password', '')
+        remember = request.form.get('remember') == 'on'
+        
+        if not username or not password:
+            flash('Por favor completa todos los campos', 'error')
+            return render_template('login.html')
+        
+        # Buscar usuario por username o email
+        user = User.query.filter(
+            (User.username == username) | (User.email == username)
+        ).first()
+        
+        if user and user.check_password(password):
+            if not user.is_active:
+                flash('Tu cuenta ha sido desactivada', 'error')
+                return render_template('login.html')
+            
+            login_user(user, remember=remember)
+            user.update_last_login()
+            
+            logger.info(f"Usuario {user.username} ha iniciado sesión")
+            flash(f'¡Bienvenido de vuelta, {user.username}!', 'success')
+            
+            next_page = request.args.get('next')
+            return redirect(next_page) if next_page else redirect(url_for('dashboard'))
+        else:
+            flash('Usuario o contraseña incorrectos', 'error')
+            logger.warning(f"Intento de login fallido para: {username}")
+    
+    return render_template('login.html')
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    """Página de registro"""
+    if current_user.is_authenticated:
+        return redirect(url_for('dashboard'))
+    
+    if request.method == 'POST':
+        username = request.form.get('username', '').strip()
+        email = request.form.get('email', '').strip().lower()
+        password = request.form.get('password', '')
+        password_confirm = request.form.get('password_confirm', '')
+        full_name = request.form.get('full_name', '').strip()
+        
+        # Validaciones
+        if not all([username, email, password, full_name]):
+            flash('Por favor completa todos los campos', 'error')
+            return render_template('register.html')
+        
+        if len(username) < 3 or len(username) > 20:
+            flash('El usuario debe tener entre 3 y 20 caracteres', 'error')
+            return render_template('register.html')
+        
+        if len(password) < 6:
+            flash('La contraseña debe tener al menos 6 caracteres', 'error')
+            return render_template('register.html')
+        
+        if password != password_confirm:
+            flash('Las contraseñas no coinciden', 'error')
+            return render_template('register.html')
+        
+        # Verificar si el usuario ya existe
+        if User.query.filter_by(username=username).first():
+            flash('El nombre de usuario ya está en uso', 'error')
+            return render_template('register.html')
+        
+        if User.query.filter_by(email=email).first():
+            flash('El email ya está registrado', 'error')
+            return render_template('register.html')
+        
+        # Crear nuevo usuario
+        try:
+            new_user = User(
+                username=username,
+                email=email,
+                full_name=full_name
+            )
+            new_user.set_password(password)
+            
+            db.session.add(new_user)
+            db.session.commit()
+            
+            logger.info(f"Nuevo usuario registrado: {username}")
+            flash('¡Cuenta creada exitosamente! Por favor inicia sesión', 'success')
+            return redirect(url_for('login'))
+        
+        except Exception as e:
+            db.session.rollback()
+            logger.error(f"Error al registrar usuario: {e}")
+            flash('Error al crear la cuenta. Por favor intenta de nuevo', 'error')
+    
+    return render_template('register.html')
+
+
+@app.route('/logout')
+@login_required
+def logout():
+    """Cerrar sesión"""
+    username = current_user.username
+    logout_user()
+    logger.info(f"Usuario {username} ha cerrado sesión")
+    flash('Has cerrado sesión exitosamente', 'success')
+    return redirect(url_for('index'))
+
+
+@app.route('/dashboard')
+@login_required
+def dashboard():
+    """Dashboard del usuario"""
+    # Obtener estadísticas del usuario
+    total_predictions = Prediction.query.filter_by(user_id=current_user.id).count()
+    
+    # Últimas predicciones
+    recent_predictions = Prediction.query.filter_by(user_id=current_user.id)\
+        .order_by(Prediction.timestamp.desc())\
+        .limit(10)\
+        .all()
+    
+    # Calcular promedio de confianza
+    all_predictions = Prediction.query.filter_by(user_id=current_user.id).all()
+    avg_confidence = sum(p.confidence for p in all_predictions) / len(all_predictions) if all_predictions else 0
+    
+    # Palabras más usadas
+    word_counts = {}
+    for pred in all_predictions:
+        word_counts[pred.word] = word_counts.get(pred.word, 0) + 1
+    
+    top_words = sorted(word_counts.items(), key=lambda x: x[1], reverse=True)[:5]
+    
+    return render_template('dashboard.html',
+                         user=current_user,
+                         total_predictions=total_predictions,
+                         recent_predictions=recent_predictions,
+                         avg_confidence=avg_confidence,
+                         top_words=top_words)
 
 
 @app.route('/css/<path:filename>')
@@ -159,7 +329,8 @@ def handle_connect():
         'count_frame': 0,
         'fix_frames': 0,
         'recording': False,
-        'sentence': []
+        'sentence': [],
+        'user_id': current_user.id if current_user.is_authenticated else None
     }
     
     emit('connected', {'message': 'Conectado al servidor LSP'})
@@ -239,6 +410,22 @@ def handle_frame(data):
                         
                         session['sentence'].insert(0, word_label)
                         
+                        # Guardar predicción en base de datos si el usuario está autenticado
+                        if session.get('user_id'):
+                            try:
+                                new_prediction = Prediction(
+                                    user_id=session['user_id'],
+                                    word=word_label,
+                                    word_id=word_id,
+                                    confidence=confidence,
+                                    session_id=request.sid
+                                )
+                                db.session.add(new_prediction)
+                                db.session.commit()
+                            except Exception as e:
+                                logger.error(f"Error guardando predicción: {e}")
+                                db.session.rollback()
+                        
                         # Enviar predicción
                         emit('prediction', {
                             'word': word_label,
@@ -293,6 +480,11 @@ if __name__ == '__main__':
     logger.info("Iniciando servidor LSP Web Application")
     logger.info(f"Frontend: {app.static_folder}")
     logger.info(f"Vocabulario: {len(config.get_word_ids())} palabras")
+    
+    # Crear tablas de base de datos
+    with app.app_context():
+        db.create_all()
+        logger.info("Base de datos inicializada")
     
     # Modo desarrollo con hot reload
     socketio.run(app, 
