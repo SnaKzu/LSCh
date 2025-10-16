@@ -31,14 +31,13 @@
                 <li><a href="#caracteristicas" class="nav-link">Características</a></li>
                 <li><a href="#vocabulario" class="nav-link">Vocabulario</a></li>
                 <li><a href="#tecnologia" class="nav-link">Tecnología</a></li>
-                {% if current_user.is_authenticated %}
+
                     <li><a href="{{ url_for('dashboard') }}" class="nav-link"><i class="fas fa-chart-line"></i> Dashboard</a></li>
-                    <li><a href="demo.html" class="btn-demo">Probar Demo</a></li>
                     <li><a href="{{ url_for('logout') }}" class="nav-link"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
-                {% else %}
+
                     <li><a href="{{ url_for('login') }}" class="nav-link"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</a></li>
                     <li><a href="{{ url_for('register') }}" class="btn-demo">Registrarse</a></li>
-                {% endif %}
+
             </ul>
             <div class="hamburger">
                 <span></span>

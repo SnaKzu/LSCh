@@ -19,7 +19,21 @@ import mediapipe as mp
 # Añadir directorio raíz al path para imports
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
-from tensorflow.keras.models import load_model
+# Try dynamic imports to avoid static analysis issues (e.g. linters unable to resolve tensorflow.keras)
+try:
+    import importlib
+    tf_keras = importlib.import_module('tensorflow.keras')
+    load_model = tf_keras.models.load_model
+except Exception:
+    try:
+        import importlib
+        keras_mod = importlib.import_module('keras')
+        load_model = keras_mod.models.load_model
+    except Exception:
+        load_model = None
+        import sys as _sys
+        _sys.stderr.write("Warning: could not import load_model from tensorflow.keras or keras. Model loading will be disabled.\n")
+
 from helpers import mediapipe_detection, extract_keypoints, there_hand
 from evaluate_model import normalize_keypoints
 from config_manager import ConfigManager

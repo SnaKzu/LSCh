@@ -13,21 +13,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Styles -->
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="stylesheet" href="{{ url_for('serve_css', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('serve_css', filename='dashboard.css') }}">
 </head>
 <body>
     <!-- Navbar -->
     <nav class="navbar">
         <div class="container">
-            <a href="/" class="nav-brand">
+            <a href="{{ url_for('index') }}" class="nav-brand">
                 <i class="fas fa-hand-paper"></i>
                 <span>LSP Recognition</span>
             </a>
             <ul class="nav-menu">
-                <li><a href="/dashboard" class="nav-link active">Dashboard</a></li>
-                <li><a href="/demo" class="nav-link">Demo</a></li>
-                <li><a href="/#vocabulario" class="nav-link">Vocabulario</a></li>
+                <li><a href="{{ url_for('dashboard') }}" class="nav-link active">Dashboard</a></li>
+                <li><a href="{{ url_for('demo') }}" class="nav-link">Demo</a></li>
+                <li><a href="{{ url_for('index') }}#vocabulario" class="nav-link">Vocabulario</a></li>
                 <li class="user-menu">
                     <button class="user-button" onclick="toggleUserMenu()">
                         <i class="fas fa-user-circle"></i>
@@ -35,11 +35,11 @@
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="user-dropdown" id="userDropdown">
-                        <a href="/dashboard"><i class="fas fa-th-large"></i> Dashboard</a>
+                        <a href="{{ url_for('dashboard') }}"><i class="fas fa-th-large"></i> Dashboard</a>
                         <a href="#"><i class="fas fa-user"></i> Perfil</a>
                         <a href="#"><i class="fas fa-cog"></i> Configuración</a>
                         <div class="dropdown-divider"></div>
-                        <a href="/logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+                        <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
                     </div>
                 </li>
             </ul>
@@ -56,7 +56,7 @@
                     <p>Aquí puedes ver tus estadísticas y el historial de tus predicciones</p>
                 </div>
                 <div class="welcome-actions">
-                    <a href="/demo" class="btn-primary">
+                    <a href="{{ url_for('demo') }}" class="btn-primary">
                         <i class="fas fa-video"></i> Ir al Demo
                     </a>
                 </div>
@@ -132,7 +132,7 @@
                             <div class="empty-state">
                                 <i class="fas fa-hand-paper"></i>
                                 <p>Aún no has realizado predicciones</p>
-                                <a href="/demo" class="btn-secondary">Comenzar Ahora</a>
+                                <a href="{{ url_for('demo') }}" class="btn-secondary">Comenzar Ahora</a>
                             </div>
                         {% endif %}
                     </div>
