@@ -12,9 +12,9 @@ from pathlib import Path
 
 # TensorFlow 2.15+ imports
 import tensorflow as tf
-from tensorflow.keras.preprocessing.sequence import pad_sequences
-from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
-from tensorflow.keras.utils import to_categorical
+from keras.preprocessing.sequence import pad_sequences
+from keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
+from keras.utils import to_categorical
 from sklearn.model_selection import train_test_split
 
 # Imports del proyecto

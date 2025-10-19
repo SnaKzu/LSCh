@@ -6,7 +6,14 @@ from PyQt5.QtCore import QTimer, Qt
 from PyQt5.uic import loadUi
 
 import numpy as np
-from tensorflow.keras.models import load_model
+try:
+    import tensorflow as tf
+    load_model = tf.keras.models.load_model
+except Exception:
+    try:
+        from keras.models import load_model
+    except Exception:
+        raise ImportError("Could not import 'load_model' from tensorflow.keras or keras. Install TensorFlow or Keras.")
 import mediapipe as mp
 from evaluate_model import normalize_keypoints
 from helpers import *

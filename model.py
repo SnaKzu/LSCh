@@ -8,9 +8,13 @@ Actualizado para TensorFlow 2.15+ y usando configuración centralizada.
 
 import tensorflow as tf
 from tensorflow import keras
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import LSTM, Dense, Dropout
-from tensorflow.keras.regularizers import l2
+# Avoid importing tensorflow.keras.models directly to prevent unresolved import errors in some environments;
+# use keras.Sequential (available from "from tensorflow import keras") when instantiating the model.
+# Reference layers and regularizers from the already-imported `keras` to avoid unresolved import issues in some editors.
+LSTM = keras.layers.LSTM
+Dense = keras.layers.Dense
+Dropout = keras.layers.Dropout
+l2 = keras.regularizers.l2
 import logging
 
 # Importa configuración centralizada
@@ -43,9 +47,8 @@ def get_model(max_length_frames: int = None, output_length: int = None):
     logger.info(f"Construyendo modelo LSTM:")
     logger.info(f"  Input shape: ({max_length_frames}, {config.model.keypoints_length})")
     logger.info(f"  Output classes: {output_length}")
-    
     # Construcción del modelo
-    model = Sequential(name='LSP_LSTM_Classifier')
+    model = keras.Sequential(name='LSP_LSTM_Classifier')
     
     # Primera capa LSTM con return_sequences=True
     model.add(LSTM(
