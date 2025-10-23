@@ -4,9 +4,18 @@ LSCh Railway Production App - Optimized for headless environment
 """
 import os
 import logging
+import numpy as np
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from datetime import datetime
+
+# Import LSCh system
+from lsch_railway_integration import (
+    initialize_lsch_system, 
+    get_system_status, 
+    model_manager, 
+    keypoints_extractor
+)
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -91,6 +100,11 @@ def create_app():
     print("ML Library Status:")
     for lib, status in ml_status.items():
         print(f"  {lib}: {status}")
+    
+    # Initialize LSCh system
+    print("\n=== Initializing LSCh Recognition System ===")
+    lsch_initialized = initialize_lsch_system()
+    print(f"LSCh System Ready: {lsch_initialized}")
     
     @app.route('/')
     def index():
@@ -187,6 +201,81 @@ def create_app():
                 "tensorflow_test": "failed", 
                 "error": str(e)
             }), 500
+    
+    # ========== LSCh Recognition Endpoints ==========
+    
+    @app.route('/api/lsch/status')
+    def lsch_status():
+        """Get LSCh system comprehensive status"""
+        try:
+            status = get_system_status()
+            return jsonify(status)
+        except Exception as e:
+            return jsonify({
+                "error": f"Failed to get LSCh status: {str(e)}"
+            }), 500
+    
+    @app.route('/api/lsch/predict', methods=['POST'])
+    def lsch_predict():
+        """Predict sign language from keypoints sequence"""
+        try:
+            data = request.get_json()
+            
+            if not data or 'keypoints' not in data:
+                return jsonify({
+                    "error": "Missing keypoints data in request"
+                }), 400
+            
+            # Convert keypoints to numpy array
+            keypoints_data = np.array(data['keypoints'])
+            
+            # Make prediction
+            result = model_manager.predict(keypoints_data)
+            
+            return jsonify({
+                "prediction": result,
+                "input_shape": keypoints_data.shape,
+                "timestamp": datetime.now().isoformat()
+            })
+            
+        except Exception as e:
+            return jsonify({
+                "error": f"Prediction failed: {str(e)}"
+            }), 500
+    
+    @app.route('/api/lsch/test-prediction')
+    def lsch_test_prediction():
+        """Test LSCh prediction with mock data"""
+        try:
+            # Generate mock keypoints sequence
+            mock_sequence = keypoints_extractor.process_sequence(
+                [{"frame": i} for i in range(30)]
+            )
+            
+            # Make prediction
+            result = model_manager.predict(mock_sequence)
+            
+            return jsonify({
+                "test_prediction": result,
+                "mock_sequence_shape": mock_sequence.shape,
+                "vocabulary": model_manager.word_ids,
+                "timestamp": datetime.now().isoformat()
+            })
+            
+        except Exception as e:
+            return jsonify({
+                "error": f"Test prediction failed: {str(e)}"
+            }), 500
+    
+    @app.route('/api/lsch/vocabulary')
+    def lsch_vocabulary():
+        """Get LSCh vocabulary"""
+        return jsonify({
+            "vocabulary": model_manager.word_ids,
+            "vocabulary_size": len(model_manager.word_ids),
+            "language": "LSCh (Chilean Sign Language)",
+            "timestamp": datetime.now().isoformat()
+        })
     
     return app
 
