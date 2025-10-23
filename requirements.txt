@@ -12,16 +12,16 @@
 # ===================================================================
 # CORE - Deep Learning Framework
 # ===================================================================
-tensorflow==2.15.0
-# Nota: Keras viene incluido en TensorFlow 2.15+ (no instalar por separado)
-# Si tienes problemas, considera: tensorflow==2.13.0
+tensorflow==2.18.0
+# Nota: Keras viene incluido en TensorFlow 2.18+ (no instalar por separado)
+# Compatible con Railway/Nixpacks latest Python
 
 # ===================================================================
 # COMPUTER VISION
 # ===================================================================
-mediapipe==0.10.11
+mediapipe==0.10.14
 # MediaPipe para detección de pose, manos y rostro
-# Versión compatible: 0.8.11 (si hay problemas con 0.10.11)
+# Versión actualizada compatible con TensorFlow 2.18
 
 opencv-python-headless==4.10.0.84
 # OpenCV headless para servidores (sin GUI) - REQUERIDO PARA RAILWAY
@@ -32,9 +32,9 @@ opencv-python-headless==4.10.0.84
 # ===================================================================
 numpy==1.26.4
 # NumPy para operaciones numéricas
-# Compatible con TensorFlow 2.15
+# Compatible con TensorFlow 2.18
 
-pandas==2.2.2
+pandas==2.2.3
 # Pandas para manejo de DataFrames
 
 # ===================================================================
@@ -82,9 +82,9 @@ python-dotenv==1.0.1
 PyYAML==6.0.2
 # Para cargar archivo de configuración config.yaml
 
-protobuf==3.20.3
-# Protocol Buffers (requerido por MediaPipe y TensorFlow)
-# IMPORTANTE: MediaPipe 0.10.11 requiere protobuf<4.0
+protobuf==4.25.4
+# Protocol Buffers (compatible con TensorFlow 2.18 y MediaPipe 0.10.14)
+# Actualizado desde 3.20.3 para compatibilidad con versiones recientes
 
 # ===================================================================
 # PRODUCTION OPTIMIZATION
@@ -101,7 +101,7 @@ gTTS==2.5.3
 # ===================================================================
 # MACHINE LEARNING TOOLS (Opcional pero recomendado)
 # ===================================================================
-scikit-learn==1.4.2
+scikit-learn==1.5.2
 # Para métricas de evaluación y validación cruzada
 
 # ===================================================================
