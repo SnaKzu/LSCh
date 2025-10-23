@@ -1,5 +1,5 @@
 # LSCh Web Application - Requirements con PostgreSQL
-# Railway Production con Base de Datos Real
+# Railway Production con Base de Datos Real - Python 3.12 Compatible
 
 # Framework Web
 Flask==3.0.3
@@ -12,9 +12,9 @@ flask-sqlalchemy==3.1.1
 psycopg2-binary==2.9.9
 SQLAlchemy==2.0.23
 
-# Machine Learning
+# Machine Learning - Python 3.12 Compatible
 tensorflow==2.18.0
-numpy==1.24.3
+numpy>=1.26.0
 
 # Utilidades
 python-dotenv==1.0.0
