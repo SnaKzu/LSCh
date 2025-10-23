@@ -1,0 +1,40 @@
+# Railway-optimized requirements - No GUI dependencies
+# Core Flask
+Flask==3.0.3
+Flask-CORS==4.0.0
+Flask-SocketIO==5.3.6
+python-dotenv==1.0.1
+gunicorn==21.2.0
+eventlet==0.33.3
+
+# Data Processing
+numpy==1.26.4
+pandas==2.2.3
+
+# Computer Vision - HEADLESS versions only
+opencv-python-headless==4.10.0.84
+
+# TensorFlow
+tensorflow==2.18.0
+
+# MediaPipe dependencies (manual installation without GUI)
+protobuf==4.25.4
+attrs==25.4.0
+matplotlib==3.10.7
+flatbuffers==25.9.23
+
+# Database
+psycopg2-binary==2.9.9
+SQLAlchemy==2.0.25
+
+# Authentication & Security  
+bcrypt==4.1.2
+PyJWT==2.8.0
+
+# Audio processing (headless)
+librosa==0.10.1
+soundfile==0.12.1
+
+# Utilities
+requests==2.32.5
+Pillow==12.0.0
