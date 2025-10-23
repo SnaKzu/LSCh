@@ -4,7 +4,7 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "cd web-app/backend && python app.py",
+    "startCommand": "pip install -r requirements_minimal.txt && cd web-app/backend && python app_minimal.py",
     "healthcheckPath": "/api/health",
     "healthcheckTimeout": 60,
     "restartPolicyType": "ON_FAILURE",
