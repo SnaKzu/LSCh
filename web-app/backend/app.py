@@ -1,7 +1,7 @@
 """
-Backend Flask para LSP Web Application
-Reconocimiento de Lengua de Señas Peruana en tiempo real
-Con autenticación de usuarios
+Backend Flask para LSCh Web Application
+Reconocimiento de Lengua de Señas Chilenas en tiempo real
+Con autenticación de usuarios - Production Ready for Railway
 """
 
 import os
@@ -15,6 +15,10 @@ from flask_cors import CORS
 from flask_socketio import SocketIO, emit
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 import mediapipe as mp
+
+# Cargar variables de entorno para producción
+from dotenv import load_dotenv
+load_dotenv()
 
 # Añadir directorio raíz al path para imports
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
@@ -50,13 +54,26 @@ app = Flask(__name__,
             static_folder='../frontend',
             static_url_path='/static',
             template_folder='../frontend')
-app.config['SECRET_KEY'] = 'lsp-secret-key-2025-change-this-in-production'
+
+# Configuración dinámica para Railway
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'lsch-fallback-secret-key-development')
 app.config['UPLOAD_FOLDER'] = 'uploads'
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max
+app.config['MAX_CONTENT_LENGTH'] = int(os.getenv('MAX_CONTENT_LENGTH', 16777216))  # 16MB max
 
 # Configuración de base de datos
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../lsp_users.db'
+database_url = os.getenv('DATABASE_URL', 'sqlite:///../../../lsp_users.db')
+# Fix para Railway PostgreSQL URL format
+if database_url.startswith('postgres://'):
+    database_url = database_url.replace('postgres://', 'postgresql://')
+app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Configuración para producción
+if os.getenv('FLASK_ENV') == 'production':
+    app.config['DEBUG'] = False
+    app.config['TESTING'] = False
+else:
+    app.config['DEBUG'] = True
 
 # Inicializar extensiones
 db.init_app(app)
@@ -497,7 +514,7 @@ def handle_reset():
 
 
 if __name__ == '__main__':
-    logger.info("Iniciando servidor LSP Web Application")
+    logger.info("Iniciando servidor LSCh Web Application")
     logger.info(f"Frontend: {app.static_folder}")
     logger.info(f"Vocabulario: {len(config.get_word_ids())} palabras")
     
@@ -506,9 +523,22 @@ if __name__ == '__main__':
         db.create_all()
         logger.info("Base de datos inicializada")
     
-    # Modo desarrollo con hot reload
-    socketio.run(app, 
-                 host='0.0.0.0', 
-                 port=5000, 
-                 debug=True,
-                 allow_unsafe_werkzeug=True)
+    # Configuración para Railway vs desarrollo local
+    port = int(os.getenv('PORT', 5000))
+    debug_mode = os.getenv('FLASK_ENV') != 'production'
+    
+    if os.getenv('FLASK_ENV') == 'production':
+        # Producción: Railway maneja con Gunicorn
+        logger.info(f"Iniciando en modo producción en puerto {port}")
+        socketio.run(app, 
+                     host='0.0.0.0', 
+                     port=port, 
+                     debug=False)
+    else:
+        # Desarrollo: Modo debug local
+        logger.info(f"Iniciando en modo desarrollo en puerto {port}")
+        socketio.run(app, 
+                     host='0.0.0.0', 
+                     port=port, 
+                     debug=True,
+                     allow_unsafe_werkzeug=True)

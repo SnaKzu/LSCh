@@ -1,8 +1,8 @@
 # ===================================================================
-# DEPENDENCIAS DEL PROYECTO LSP (Lengua de Señas Peruana)
+# DEPENDENCIAS DEL PROYECTO LSCh (Lengua de Señas Chilena)
 # ===================================================================
 # Compatibilidad: Python 3.10, 3.11, 3.12
-# Última actualización: Octubre 2025
+# Última actualización: Octubre 2025 - Railway Production Ready
 #
 # OPCIONES DE INSTALACIÓN:
 #   1. Versión actualizada (recomendada): pip install -r requirements.txt
@@ -23,9 +23,9 @@ mediapipe==0.10.11
 # MediaPipe para detección de pose, manos y rostro
 # Versión compatible: 0.8.11 (si hay problemas con 0.10.11)
 
-opencv-contrib-python==4.10.0.84
-# OpenCV con módulos contrib para procesamiento de video
-# Alternativa más ligera: opencv-python==4.10.0.84
+opencv-python-headless==4.10.0.84
+# OpenCV headless para servidores (sin GUI) - REQUERIDO PARA RAILWAY
+# Cambio: opencv-contrib-python → opencv-python-headless para producción
 
 # ===================================================================
 # PROCESAMIENTO DE DATOS
@@ -37,37 +37,48 @@ numpy==1.26.4
 pandas==2.2.2
 # Pandas para manejo de DataFrames
 
-tables==3.9.2
-# PyTables para almacenamiento HDF5 (archivos .h5 de keypoints)
-
 # ===================================================================
-# INTERFAZ DE USUARIO
-# ===================================================================
-PyQt5==5.15.11
-# PyQt5 para la interfaz gráfica (GUI)
-# Requiere Qt5 en el sistema
-
-# ===================================================================
-# TEXT-TO-SPEECH Y AUDIO
-# ===================================================================
-gTTS==2.5.3
-# Google Text-to-Speech para síntesis de voz
-
-pygame==2.6.1
-# Pygame para reproducción de audio
-
-# ===================================================================
-# WEB FRAMEWORK (Servidor API REST)
+# WEB FRAMEWORK (Servidor API REST) - RAILWAY PRODUCTION
 # ===================================================================
 Flask==3.0.3
 # Flask para servidor web
+
+Flask-CORS==4.0.0
+# CORS para requests cross-origin
+
+Flask-SocketIO==5.5.1
+# WebSocket para comunicación en tiempo real
+
+Flask-Login==0.6.3
+# Sistema de autenticación de usuarios
+
+Flask-SQLAlchemy==3.1.1
+# ORM para base de datos
 
 Werkzeug==3.0.3
 # Dependencia de Flask (manejo de requests)
 
 # ===================================================================
+# PRODUCTION SERVER - RAILWAY
+# ===================================================================
+gunicorn==21.2.0
+# Servidor WSGI para producción
+
+eventlet==0.35.2
+# Worker class para WebSocket con gunicorn
+
+# ===================================================================
+# DATABASE - RAILWAY POSTGRESQL
+# ===================================================================
+psycopg2-binary==2.9.9
+# Driver PostgreSQL para Railway
+
+# ===================================================================
 # UTILIDADES
 # ===================================================================
+python-dotenv==1.0.1
+# Para cargar variables de entorno desde .env
+
 PyYAML==6.0.2
 # Para cargar archivo de configuración config.yaml
 
@@ -76,16 +87,22 @@ protobuf==3.20.3
 # IMPORTANTE: MediaPipe 0.10.11 requiere protobuf<4.0
 
 # ===================================================================
+# PRODUCTION OPTIMIZATION
+# ===================================================================
+whitenoise==6.6.0
+# Servir archivos estáticos en producción
+
+# ===================================================================
+# TEXT-TO-SPEECH Y AUDIO (Opcional en Railway)
+# ===================================================================
+gTTS==2.5.3
+# Google Text-to-Speech para síntesis de voz
+
+# ===================================================================
 # MACHINE LEARNING TOOLS (Opcional pero recomendado)
 # ===================================================================
-scikit-learn==1.5.1
+scikit-learn==1.4.2
 # Para métricas de evaluación y validación cruzada
-
-matplotlib==3.9.2
-# Para visualizaciones y gráficos
-
-seaborn==0.13.2
-# Para gráficos estadísticos mejorados (matriz de confusión)
 
 # ===================================================================
 # TESTING (Opcional - Solo para desarrollo)
