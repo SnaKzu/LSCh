@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - LSP Recognition</title>
+    <title>Dashboard - LSCh Recognition</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     
     <!-- Fonts -->
@@ -22,7 +22,7 @@
         <div class="container">
             <a href="/" class="nav-brand">
                 <i class="fas fa-hand-paper"></i>
-                <span>LSP Recognition</span>
+                <span>LSCh Recognition</span>
             </a>
             <ul class="nav-menu">
                 <li><a href="/dashboard" class="nav-link active">Dashboard</a></li>
@@ -31,7 +31,7 @@
                 <li class="user-menu">
                     <button class="user-button" onclick="toggleUserMenu()">
                         <i class="fas fa-user-circle"></i>
-                        <span>{{ user.username }}</span>
+                        <span id="username">Usuario Demo</span>
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="user-dropdown" id="userDropdown">
@@ -52,7 +52,7 @@
             <!-- Welcome Section -->
             <div class="welcome-section">
                 <div class="welcome-content">
-                    <h1>¡Bienvenido, {{ user.full_name or user.username }}!</h1>
+                    <h1 id="welcomeMessage">¡Bienvenido, Usuario Demo!</h1>
                     <p>Aquí puedes ver tus estadísticas y el historial de tus predicciones</p>
                 </div>
                 <div class="welcome-actions">
@@ -69,7 +69,7 @@
                         <i class="fas fa-chart-line"></i>
                     </div>
                     <div class="stat-content">
-                        <h3>{{ total_predictions }}</h3>
+                        <h3 id="totalPredictions">42</h3>
                         <p>Predicciones Totales</p>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
                         <i class="fas fa-bullseye"></i>
                     </div>
                     <div class="stat-content">
-                        <h3>{{ "%.1f"|format(avg_confidence * 100) }}%</h3>
+                        <h3 id="avgConfidence">87.5%</h3>
                         <p>Confianza Promedio</p>
                     </div>
                 </div>
@@ -89,7 +89,7 @@
                         <i class="fas fa-hands"></i>
                     </div>
                     <div class="stat-content">
-                        <h3>{{ top_words|length }}</h3>
+                        <h3 id="uniqueWords">8</h3>
                         <p>Señas Diferentes</p>
                     </div>
                 </div>
@@ -99,7 +99,7 @@
                         <i class="fas fa-clock"></i>
                     </div>
                     <div class="stat-content">
-                        <h3>{{ user.created_at.strftime('%d/%m/%Y') }}</h3>
+                        <h3 id="memberSince">20/10/2025</h3>
                         <p>Miembro Desde</p>
                     </div>
                 </div>
@@ -113,28 +113,38 @@
                         <h2><i class="fas fa-trophy"></i> Señas Más Usadas</h2>
                     </div>
                     <div class="card-body">
-                        {% if top_words %}
-                            <div class="top-words-list">
-                                {% for word, count in top_words %}
-                                <div class="top-word-item">
-                                    <div class="word-rank">{{ loop.index }}</div>
-                                    <div class="word-info">
-                                        <span class="word-name">{{ word }}</span>
-                                        <div class="word-bar">
-                                            <div class="word-fill" data-width="{{ ((count / top_words[0][1]) * 100) | round(0) }}"></div>
-                                        </div>
+                        <div class="top-words-list" id="topWordsList">
+                            <div class="top-word-item">
+                                <div class="word-rank">1</div>
+                                <div class="word-info">
+                                    <span class="word-name">Hola</span>
+                                    <div class="word-bar">
+                                        <div class="word-fill" data-width="100"></div>
                                     </div>
-                                    <div class="word-count">{{ count }}</div>
                                 </div>
-                                {% endfor %}
+                                <div class="word-count">15</div>
                             </div>
-                        {% else %}
-                            <div class="empty-state">
-                                <i class="fas fa-hand-paper"></i>
-                                <p>Aún no has realizado predicciones</p>
-                                <a href="/demo" class="btn-secondary">Comenzar Ahora</a>
+                            <div class="top-word-item">
+                                <div class="word-rank">2</div>
+                                <div class="word-info">
+                                    <span class="word-name">Gracias</span>
+                                    <div class="word-bar">
+                                        <div class="word-fill" data-width="80"></div>
+                                    </div>
+                                </div>
+                                <div class="word-count">12</div>
                             </div>
-                        {% endif %}
+                            <div class="top-word-item">
+                                <div class="word-rank">3</div>
+                                <div class="word-info">
+                                    <span class="word-name">Buenos Días</span>
+                                    <div class="word-bar">
+                                        <div class="word-fill" data-width="53"></div>
+                                    </div>
+                                </div>
+                                <div class="word-count">8</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -144,35 +154,59 @@
                         <h2><i class="fas fa-history"></i> Actividad Reciente</h2>
                     </div>
                     <div class="card-body">
-                        {% if recent_predictions %}
-                            <div class="activity-list">
-                                {% for pred in recent_predictions %}
-                                <div class="activity-item">
-                                    <div class="activity-icon">
-                                        <i class="fas fa-hand-paper"></i>
-                                    </div>
-                                    <div class="activity-content">
-                                        <div class="activity-title">{{ pred.word }}</div>
-                                        <div class="activity-time">
-                                            <i class="fas fa-clock"></i>
-                                            {{ pred.timestamp.strftime('%d/%m/%Y %H:%M') }}
-                                        </div>
-                                    </div>
-                                    <div class="activity-confidence">
-                                        <div class="confidence-badge" 
-                                             data-confidence="{{ pred.confidence }}">
-                                            {{ "%.0f"|format(pred.confidence * 100) }}%
-                                        </div>
+                        <div class="activity-list" id="activityList">
+                            <div class="activity-item">
+                                <div class="activity-icon">
+                                    <i class="fas fa-hand-paper"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Hola</div>
+                                    <div class="activity-time">
+                                        <i class="fas fa-clock"></i>
+                                        23/10/2025 14:30
                                     </div>
                                 </div>
-                                {% endfor %}
+                                <div class="activity-confidence">
+                                    <div class="confidence-badge" data-confidence="0.92">
+                                        92%
+                                    </div>
+                                </div>
                             </div>
-                        {% else %}
-                            <div class="empty-state">
-                                <i class="fas fa-history"></i>
-                                <p>No hay actividad reciente</p>
+                            <div class="activity-item">
+                                <div class="activity-icon">
+                                    <i class="fas fa-hand-paper"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Gracias</div>
+                                    <div class="activity-time">
+                                        <i class="fas fa-clock"></i>
+                                        23/10/2025 14:28
+                                    </div>
+                                </div>
+                                <div class="activity-confidence">
+                                    <div class="confidence-badge" data-confidence="0.87">
+                                        87%
+                                    </div>
+                                </div>
                             </div>
-                        {% endif %}
+                            <div class="activity-item">
+                                <div class="activity-icon">
+                                    <i class="fas fa-hand-paper"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Buenos Días</div>
+                                    <div class="activity-time">
+                                        <i class="fas fa-clock"></i>
+                                        23/10/2025 14:25
+                                    </div>
+                                </div>
+                                <div class="activity-confidence">
+                                    <div class="confidence-badge" data-confidence="0.81">
+                                        81%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -187,24 +221,20 @@
                         <div class="info-grid">
                             <div class="info-item">
                                 <span class="info-label">Usuario:</span>
-                                <span class="info-value">{{ user.username }}</span>
+                                <span class="info-value" id="userInfo">demo_user</span>
                             </div>
                             <div class="info-item">
                                 <span class="info-label">Email:</span>
-                                <span class="info-value">{{ user.email }}</span>
+                                <span class="info-value" id="emailInfo">demo@lsch.com</span>
                             </div>
                             <div class="info-item">
                                 <span class="info-label">Nombre Completo:</span>
-                                <span class="info-value">{{ user.full_name or 'No especificado' }}</span>
+                                <span class="info-value" id="fullNameInfo">Usuario Demo</span>
                             </div>
                             <div class="info-item">
                                 <span class="info-label">Última Sesión:</span>
-                                <span class="info-value">
-                                    {% if user.last_login %}
-                                        {{ user.last_login.strftime('%d/%m/%Y %H:%M') }}
-                                    {% else %}
-                                        Primera vez
-                                    {% endif %}
+                                <span class="info-value" id="lastLoginInfo">
+                                    23/10/2025 14:15
                                 </span>
                             </div>
                         </div>
@@ -217,7 +247,7 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 LSP Recognition. Todos los derechos reservados.</p>
+            <p>&copy; 2025 LSCh Recognition. Todos los derechos reservados.</p>
         </div>
     </footer>
 

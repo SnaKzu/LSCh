@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrarse - LSP Recognition</title>
+    <title>Registrarse - LSCh Recognition</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     
     <!-- Fonts -->
@@ -22,7 +22,7 @@
         <div class="container">
             <a href="/" class="brand">
                 <i class="fas fa-hand-paper"></i>
-                <span>LSP Recognition</span>
+                <span>LSCh Recognition</span>
             </a>
             <a href="/" class="back-home">
                 <i class="fas fa-arrow-left"></i> Volver al inicio
@@ -38,29 +38,21 @@
                 <div class="auth-form-wrapper">
                     <div class="auth-header">
                         <h1>Crear Cuenta</h1>
-                        <p>Únete para comenzar a usar LSP Recognition</p>
+                        <p>Únete para comenzar a usar LSCh Recognition</p>
                     </div>
 
                     <!-- Flash Messages -->
-                    {% with messages = get_flashed_messages(with_categories=true) %}
-                        {% if messages %}
-                            {% for category, message in messages %}
-                                <div class="alert alert-{{ category }}">
-                                    <i class="fas fa-{{ 'check-circle' if category == 'success' else 'exclamation-circle' }}"></i>
-                                    <span>{{ message }}</span>
-                                </div>
-                            {% endfor %}
-                        {% endif %}
-                    {% endwith %}
+                    <div id="flashMessages" style="display: none;">
+                        <!-- Flash messages will be shown via JavaScript -->
+                    </div>
 
-                    <form method="POST" action="{{ url_for('register') }}" class="auth-form" id="registerForm">
+                    <form method="POST" action="/register" class="auth-form" id="registerForm">
                         <div class="form-group">
                             <label for="full_name">Nombre Completo</label>
                             <div class="input-with-icon">
                                 <i class="fas fa-id-card"></i>
                                 <input type="text" id="full_name" name="full_name" required 
-                                       placeholder="Tu nombre completo"
-                                       value="{{ request.form.full_name }}">
+                                       placeholder="Tu nombre completo">
                             </div>
                         </div>
 
@@ -70,7 +62,6 @@
                                 <i class="fas fa-user"></i>
                                 <input type="text" id="username" name="username" required 
                                        placeholder="Elige un nombre de usuario"
-                                       value="{{ request.form.username }}"
                                        pattern="[a-zA-Z0-9_]{3,20}"
                                        title="3-20 caracteres, solo letras, números y guión bajo">
                             </div>
@@ -82,8 +73,7 @@
                             <div class="input-with-icon">
                                 <i class="fas fa-envelope"></i>
                                 <input type="email" id="email" name="email" required 
-                                       placeholder="tu@email.com"
-                                       value="{{ request.form.email }}">
+                                       placeholder="tu@email.com">
                             </div>
                         </div>
 
@@ -134,7 +124,7 @@
                     </form>
 
                     <div class="auth-footer">
-                        <p>¿Ya tienes una cuenta? <a href="{{ url_for('login') }}">Inicia sesión aquí</a></p>
+                        <p>¿Ya tienes una cuenta? <a href="/login">Inicia sesión aquí</a></p>
                     </div>
                 </div>
             </div>
@@ -144,7 +134,7 @@
                 <div class="auth-visual-content">
                     <i class="fas fa-user-plus auth-icon"></i>
                     <h2>Comienza tu viaje</h2>
-                    <p>Regístrate para acceder a todas las funcionalidades del reconocimiento de Lengua de Señas Peruana</p>
+                    <p>Regístrate para acceder a todas las funcionalidades del reconocimiento de Lengua de Señas Chilena</p>
                     <div class="features-list">
                         <div class="feature-item">
                             <i class="fas fa-check-circle"></i>

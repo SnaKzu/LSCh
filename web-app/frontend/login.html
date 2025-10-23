@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión - LSP Recognition</title>
+    <title>Iniciar Sesión - LSCh Recognition</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     
     <!-- Fonts -->
@@ -22,7 +22,7 @@
         <div class="container">
             <a href="/" class="brand">
                 <i class="fas fa-hand-paper"></i>
-                <span>LSP Recognition</span>
+                <span>LSCh Recognition</span>
             </a>
             <a href="/" class="back-home">
                 <i class="fas fa-arrow-left"></i> Volver al inicio
@@ -38,7 +38,7 @@
                 <div class="auth-visual-content">
                     <i class="fas fa-hand-paper auth-icon"></i>
                     <h2>Bienvenido de vuelta</h2>
-                    <p>Inicia sesión para acceder al reconocimiento de Lengua de Señas Peruana en tiempo real</p>
+                    <p>Inicia sesión para acceder al reconocimiento de Lengua de Señas Chilena en tiempo real</p>
                     <div class="features-list">
                         <div class="feature-item">
                             <i class="fas fa-check-circle"></i>
@@ -65,25 +65,17 @@
                     </div>
 
                     <!-- Flash Messages -->
-                    {% with messages = get_flashed_messages(with_categories=true) %}
-                        {% if messages %}
-                            {% for category, message in messages %}
-                                <div class="alert alert-{{ category }}">
-                                    <i class="fas fa-{{ 'check-circle' if category == 'success' else 'exclamation-circle' }}"></i>
-                                    <span>{{ message }}</span>
-                                </div>
-                            {% endfor %}
-                        {% endif %}
-                    {% endwith %}
+                    <div id="flashMessages" style="display: none;">
+                        <!-- Flash messages will be shown via JavaScript -->
+                    </div>
 
-                    <form method="POST" action="{{ url_for('login') }}" class="auth-form" id="loginForm">
+                    <form method="POST" action="/login" class="auth-form" id="loginForm">
                         <div class="form-group">
                             <label for="username">Usuario o Email</label>
                             <div class="input-with-icon">
                                 <i class="fas fa-user"></i>
                                 <input type="text" id="username" name="username" required 
-                                       placeholder="Tu usuario o email"
-                                       value="{{ request.form.username }}">
+                                       placeholder="Tu usuario o email">
                             </div>
                         </div>
 
@@ -115,7 +107,7 @@
                     </form>
 
                     <div class="auth-footer">
-                        <p>¿No tienes una cuenta? <a href="{{ url_for('register') }}">Regístrate aquí</a></p>
+                        <p>¿No tienes una cuenta? <a href="/register">Regístrate aquí</a></p>
                     </div>
 
                     <!-- Social Login (Optional) -->
