@@ -549,11 +549,13 @@ if __name__ == '__main__':
                      host='0.0.0.0', 
                      port=port, 
                      debug=False,
-                     log_output=True)
+                     log_output=True,
+                     allow_unsafe_werkzeug=True)  # Required for Railway production
     else:
         # Desarrollo: Modo debug local
         logger.info(f"🔧 Development (Threading) - Puerto {port}")
         socketio.run(app, 
                      host='0.0.0.0', 
                      port=port, 
-                     debug=True)
+                     debug=True,
+                     allow_unsafe_werkzeug=True)
