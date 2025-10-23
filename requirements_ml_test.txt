@@ -1,0 +1,11 @@
+# Intermediate requirements - Core ML libraries
+Flask==3.0.3
+Flask-CORS==4.0.0
+python-dotenv==1.0.1
+
+# Core ML libraries (no heavy models)
+numpy==1.26.4
+pandas==2.2.3
+opencv-python-headless==4.10.0.84
+mediapipe==0.10.14
+tensorflow==2.18.0
