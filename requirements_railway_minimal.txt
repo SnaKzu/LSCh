@@ -1,0 +1,22 @@
+# LSCh Web Application - Minimal Requirements para Railway
+# Versión simplificada sin TensorFlow pesado
+
+# Framework Web
+Flask==3.0.3
+flask-cors==4.0.0
+flask-socketio==5.3.6
+flask-login==0.6.3
+flask-sqlalchemy==3.1.1
+
+# Base de Datos PostgreSQL
+psycopg2-binary==2.9.9
+
+# Utilidades básicas
+python-dotenv==1.0.0
+werkzeug==3.0.3
+
+# Para producción
+gunicorn==21.2.0
+
+# WebSocket (Threading mode)
+# TensorFlow y NumPy serán opcionales para reducir tiempo de build
