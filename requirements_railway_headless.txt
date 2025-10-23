@@ -1,0 +1,38 @@
+# Railway-optimized requirements - COMPLETELY HEADLESS
+# NO OpenCV to avoid libGL.so.1 issues
+# Core Flask
+Flask==3.0.3
+Flask-CORS==4.0.0
+Flask-SocketIO==5.3.6
+python-dotenv==1.0.1
+gunicorn==21.2.0
+eventlet==0.33.3
+
+# Data Processing - NO OpenCV
+numpy==1.26.4
+pandas==2.2.3
+
+# TensorFlow ONLY (no computer vision libs)
+tensorflow==2.18.0
+
+# Database
+psycopg2-binary==2.9.9
+SQLAlchemy==2.0.25
+
+# Authentication & Security  
+bcrypt==4.1.2
+PyJWT==2.8.0
+
+# Audio processing (minimal)
+librosa==0.10.1
+soundfile==0.12.1
+
+# Utilities (NO OpenCV dependencies)
+requests==2.32.5
+Pillow==12.0.0
+
+# Minimal MediaPipe dependencies (NO GUI)
+protobuf==4.25.4
+attrs==25.4.0
+matplotlib==3.10.7
+flatbuffers==25.9.23
