@@ -4,7 +4,7 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "pip install -r requirements_railway_threading.txt && cd web-app/backend && python app_railway_threading.py",
+    "startCommand": "pip install -r requirements_railway_threading.txt && cd web-app/backend && python app_railway_web.py",
     "healthcheckPath": "/api/health",
     "healthcheckTimeout": 300,
     "restartPolicyType": "ON_FAILURE",

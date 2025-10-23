@@ -31,13 +31,9 @@
                 <li><a href="#caracteristicas" class="nav-link">Características</a></li>
                 <li><a href="#vocabulario" class="nav-link">Vocabulario</a></li>
                 <li><a href="#tecnologia" class="nav-link">Tecnología</a></li>
-                {% if current_user.is_authenticated %}
-                    <li><a href="{{ url_for('dashboard') }}" class="nav-link"><i class="fas fa-chart-line"></i> Dashboard</a></li>
-                    <li><a href="{{ url_for('logout') }}" class="nav-link"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
-                {% else %}
-                    <li><a href="{{ url_for('login') }}" class="nav-link"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</a></li>
-                    <li><a href="{{ url_for('register') }}" class="btn-demo">Registrarse</a></li>
-                {% endif %}
+                <li><a href="/demo" class="nav-link"><i class="fas fa-play"></i> Demo</a></li>
+                <li><a href="/login" class="nav-link"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</a></li>
+                <li><a href="/register" class="btn-demo">Registrarse</a></li>
             </ul>
             <div class="hamburger">
                 <span></span>
@@ -67,7 +63,7 @@
                     a texto en tiempo real usando MediaPipe y redes neuronales LSTM.
                 </p>
                 <div class="hero-buttons">
-                    <a href="{{ url_for('demo') }}" class="btn btn-primary">
+                    <a href="/demo" class="btn btn-primary">
                         <i class="fas fa-play"></i>
                         Probar Ahora
                     </a>
@@ -294,7 +290,7 @@
                 <p class="cta-description">
                     Experimenta el reconocimiento de Lengua de Señas Chilenas en tu navegador
                 </p>
-                <a href="{{ url_for('demo') }}" class="btn btn-cta">
+                <a href="/demo" class="btn btn-cta">
                     <i class="fas fa-video"></i>
                     Activar Demo Interactivo
                 </a>
@@ -321,7 +317,7 @@
                     <ul>
                         <li><a href="#inicio">Inicio</a></li>
                         <li><a href="#caracteristicas">Características</a></li>
-                        <li><a href="{{ url_for('demo') }}">Demo</a></li>
+                        <li><a href="/demo">Demo</a></li>
                         <li><a href="#tecnologia">Tecnología</a></li>
                     </ul>
                 </div>
