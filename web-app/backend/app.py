@@ -48,7 +48,7 @@ config = ConfigManager()
 
 app = Flask(__name__, 
             static_folder='../frontend',
-            static_url_path='',
+            static_url_path='/static',
             template_folder='../frontend')
 app.config['SECRET_KEY'] = 'lsp-secret-key-2025-change-this-in-production'
 app.config['UPLOAD_FOLDER'] = 'uploads'
@@ -101,7 +101,7 @@ def index():
 @login_required
 def demo():
     """Página de demo interactivo - requiere login"""
-    return send_from_directory('../frontend', 'demo.html')
+    return render_template('demo.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -260,6 +260,12 @@ def serve_css(filename):
 def serve_js(filename):
     """Servir archivos JavaScript"""
     return send_from_directory('../frontend/js', filename)
+
+
+@app.route('/assets/<path:filename>')
+def serve_assets(filename):
+    """Servir archivos de assets"""
+    return send_from_directory('../frontend/assets', filename)
 
 
 @app.route('/favicon.ico')

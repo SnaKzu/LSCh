@@ -1,0 +1,81 @@
+2025-10-20 23:01:59 | root                      | [32mINFO[0m | ======================================================================
+2025-10-20 23:01:59 | root                      | [32mINFO[0m | Sistema de Logging Inicializado
+2025-10-20 23:01:59 | root                      | [32mINFO[0m | Nivel: INFO
+2025-10-20 23:01:59 | root                      | [32mINFO[0m | Archivo: c:\Users\Diego\Documents\test6\modelo_lstm_lsp-main\logs\lsp_20251020.log
+2025-10-20 23:01:59 | root                      | [32mINFO[0m | ======================================================================
+2025-10-20 23:01:59 | config_manager            | [32mINFO[0m | Configuración cargada desde: c:\Users\Diego\Documents\test6\modelo_lstm_lsp-main\config.yaml
+2025-10-20 23:02:00 | tensorflow                | [33mWARNING[0m | From C:\Users\Diego\Documents\test6\.venv\lib\site-packages\keras\src\backend.py:1398: The name tf.executing_eagerly_outside_functions is deprecated. Please use tf.compat.v1.executing_eagerly_outside_functions instead.
+
+2025-10-20 23:02:00 | __main__                  | [32mINFO[0m | Modelo cargado: c:\Users\Diego\Documents\test6\modelo_lstm_lsp-main\models\actions_15.keras
+2025-10-20 23:02:00 | __main__                  | [32mINFO[0m | Iniciando servidor LSP Web Application
+2025-10-20 23:02:00 | __main__                  | [32mINFO[0m | Frontend: c:\Users\Diego\Documents\test6\modelo_lstm_lsp-main\web-app\backend\../frontend
+2025-10-20 23:02:00 | __main__                  | [32mINFO[0m | Vocabulario: 14 palabras
+2025-10-20 23:02:00 | __main__                  | [32mINFO[0m | Base de datos inicializada
+2025-10-20 23:02:00 | werkzeug                  | [32mINFO[0m |  * Restarting with stat
+2025-10-20 23:02:06 | root                      | [32mINFO[0m | ======================================================================
+2025-10-20 23:02:06 | root                      | [32mINFO[0m | Sistema de Logging Inicializado
+2025-10-20 23:02:06 | root                      | [32mINFO[0m | Nivel: INFO
+2025-10-20 23:02:06 | root                      | [32mINFO[0m | Archivo: c:\Users\Diego\Documents\test6\modelo_lstm_lsp-main\logs\lsp_20251020.log
+2025-10-20 23:02:06 | root                      | [32mINFO[0m | ======================================================================
+2025-10-20 23:02:06 | config_manager            | [32mINFO[0m | Configuración cargada desde: c:\Users\Diego\Documents\test6\modelo_lstm_lsp-main\config.yaml
+2025-10-20 23:02:07 | tensorflow                | [33mWARNING[0m | From C:\Users\Diego\Documents\test6\.venv\lib\site-packages\keras\src\backend.py:1398: The name tf.executing_eagerly_outside_functions is deprecated. Please use tf.compat.v1.executing_eagerly_outside_functions instead.
+
+2025-10-20 23:02:07 | __main__                  | [32mINFO[0m | Modelo cargado: c:\Users\Diego\Documents\test6\modelo_lstm_lsp-main\models\actions_15.keras
+2025-10-20 23:02:07 | __main__                  | [32mINFO[0m | Iniciando servidor LSP Web Application
+2025-10-20 23:02:07 | __main__                  | [32mINFO[0m | Frontend: c:\Users\Diego\Documents\test6\modelo_lstm_lsp-main\web-app\backend\../frontend
+2025-10-20 23:02:07 | __main__                  | [32mINFO[0m | Vocabulario: 14 palabras
+2025-10-20 23:02:07 | __main__                  | [32mINFO[0m | Base de datos inicializada
+2025-10-20 23:02:07 | werkzeug                  | [33mWARNING[0m |  * Debugger is active!
+2025-10-20 23:02:07 | werkzeug                  | [32mINFO[0m |  * Debugger PIN: 611-865-280
+2025-10-20 23:07:17 | __main__                  | [32mINFO[0m | Cliente conectado: YdmyOZFKgvh4JsYDAAAB
+2025-10-20 23:08:29 | __main__                  | [32mINFO[0m | Cliente desconectado: YdmyOZFKgvh4JsYDAAAB
+2025-10-20 23:09:48 | werkzeug                  | [32mINFO[0m |  * Detected change in 'c:\\Users\\Diego\\Documents\\test6\\modelo_lstm_lsp-main\\web-app\\backend\\app.py', reloading
+2025-10-20 23:09:49 | werkzeug                  | [32mINFO[0m |  * Restarting with stat
+2025-10-20 23:09:55 | root                      | [32mINFO[0m | ======================================================================
+2025-10-20 23:09:55 | root                      | [32mINFO[0m | Sistema de Logging Inicializado
+2025-10-20 23:09:55 | root                      | [32mINFO[0m | Nivel: INFO
+2025-10-20 23:09:55 | root                      | [32mINFO[0m | Archivo: c:\Users\Diego\Documents\test6\modelo_lstm_lsp-main\logs\lsp_20251020.log
+2025-10-20 23:09:55 | root                      | [32mINFO[0m | ======================================================================
+2025-10-20 23:09:55 | config_manager            | [32mINFO[0m | Configuración cargada desde: c:\Users\Diego\Documents\test6\modelo_lstm_lsp-main\config.yaml
+2025-10-20 23:09:56 | tensorflow                | [33mWARNING[0m | From C:\Users\Diego\Documents\test6\.venv\lib\site-packages\keras\src\backend.py:1398: The name tf.executing_eagerly_outside_functions is deprecated. Please use tf.compat.v1.executing_eagerly_outside_functions instead.
+
+2025-10-20 23:09:56 | __main__                  | [32mINFO[0m | Modelo cargado: c:\Users\Diego\Documents\test6\modelo_lstm_lsp-main\models\actions_15.keras
+2025-10-20 23:09:56 | __main__                  | [32mINFO[0m | Iniciando servidor LSP Web Application
+2025-10-20 23:09:56 | __main__                  | [32mINFO[0m | Frontend: c:\Users\Diego\Documents\test6\modelo_lstm_lsp-main\web-app\backend\../frontend
+2025-10-20 23:09:56 | __main__                  | [32mINFO[0m | Vocabulario: 14 palabras
+2025-10-20 23:09:56 | __main__                  | [32mINFO[0m | Base de datos inicializada
+2025-10-20 23:09:56 | werkzeug                  | [33mWARNING[0m |  * Debugger is active!
+2025-10-20 23:09:56 | werkzeug                  | [32mINFO[0m |  * Debugger PIN: 611-865-280
+2025-10-20 23:11:08 | root                      | [32mINFO[0m | ======================================================================
+2025-10-20 23:11:08 | root                      | [32mINFO[0m | Sistema de Logging Inicializado
+2025-10-20 23:11:08 | root                      | [32mINFO[0m | Nivel: INFO
+2025-10-20 23:11:08 | root                      | [32mINFO[0m | Archivo: c:\Users\Diego\Documents\test6\modelo_lstm_lsp-main\logs\lsp_20251020.log
+2025-10-20 23:11:08 | root                      | [32mINFO[0m | ======================================================================
+2025-10-20 23:11:08 | config_manager            | [32mINFO[0m | Configuración cargada desde: c:\Users\Diego\Documents\test6\modelo_lstm_lsp-main\config.yaml
+2025-10-20 23:11:09 | tensorflow                | [33mWARNING[0m | From C:\Users\Diego\Documents\test6\.venv\lib\site-packages\keras\src\backend.py:1398: The name tf.executing_eagerly_outside_functions is deprecated. Please use tf.compat.v1.executing_eagerly_outside_functions instead.
+
+2025-10-20 23:11:09 | __main__                  | [32mINFO[0m | Modelo cargado: c:\Users\Diego\Documents\test6\modelo_lstm_lsp-main\models\actions_15.keras
+2025-10-20 23:11:09 | __main__                  | [32mINFO[0m | Iniciando servidor LSP Web Application
+2025-10-20 23:11:09 | __main__                  | [32mINFO[0m | Frontend: c:\Users\Diego\Documents\test6\modelo_lstm_lsp-main\web-app\backend\../frontend
+2025-10-20 23:11:09 | __main__                  | [32mINFO[0m | Vocabulario: 14 palabras
+2025-10-20 23:11:09 | __main__                  | [32mINFO[0m | Base de datos inicializada
+2025-10-20 23:11:09 | werkzeug                  | [32mINFO[0m |  * Restarting with stat
+2025-10-20 23:11:15 | root                      | [32mINFO[0m | ======================================================================
+2025-10-20 23:11:15 | root                      | [32mINFO[0m | Sistema de Logging Inicializado
+2025-10-20 23:11:15 | root                      | [32mINFO[0m | Nivel: INFO
+2025-10-20 23:11:15 | root                      | [32mINFO[0m | Archivo: c:\Users\Diego\Documents\test6\modelo_lstm_lsp-main\logs\lsp_20251020.log
+2025-10-20 23:11:15 | root                      | [32mINFO[0m | ======================================================================
+2025-10-20 23:11:15 | config_manager            | [32mINFO[0m | Configuración cargada desde: c:\Users\Diego\Documents\test6\modelo_lstm_lsp-main\config.yaml
+2025-10-20 23:11:16 | tensorflow                | [33mWARNING[0m | From C:\Users\Diego\Documents\test6\.venv\lib\site-packages\keras\src\backend.py:1398: The name tf.executing_eagerly_outside_functions is deprecated. Please use tf.compat.v1.executing_eagerly_outside_functions instead.
+
+2025-10-20 23:11:16 | __main__                  | [32mINFO[0m | Modelo cargado: c:\Users\Diego\Documents\test6\modelo_lstm_lsp-main\models\actions_15.keras
+2025-10-20 23:11:16 | __main__                  | [32mINFO[0m | Iniciando servidor LSP Web Application
+2025-10-20 23:11:16 | __main__                  | [32mINFO[0m | Frontend: c:\Users\Diego\Documents\test6\modelo_lstm_lsp-main\web-app\backend\../frontend
+2025-10-20 23:11:16 | __main__                  | [32mINFO[0m | Vocabulario: 14 palabras
+2025-10-20 23:11:16 | __main__                  | [32mINFO[0m | Base de datos inicializada
+2025-10-20 23:11:16 | werkzeug                  | [33mWARNING[0m |  * Debugger is active!
+2025-10-20 23:11:16 | werkzeug                  | [32mINFO[0m |  * Debugger PIN: 611-865-280
+2025-10-20 23:13:06 | __main__                  | [33mWARNING[0m | Intento de login fallido para: diegolclv@gmail.com
+2025-10-20 23:13:22 | __main__                  | [33mWARNING[0m | Intento de login fallido para: diegolclv@gmail.com
+2025-10-20 23:14:21 | __main__                  | [32mINFO[0m | Nuevo usuario registrado: Test1
+2025-10-20 23:14:31 | __main__                  | [32mINFO[0m | Usuario Test1 ha iniciado sesión
