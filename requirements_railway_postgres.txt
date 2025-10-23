@@ -1,0 +1,27 @@
+# LSCh Web Application - Requirements con PostgreSQL
+# Railway Production con Base de Datos Real
+
+# Framework Web
+Flask==3.0.3
+flask-cors==4.0.0
+flask-socketio==5.3.6
+flask-login==0.7.0
+flask-sqlalchemy==3.1.1
+
+# Base de Datos PostgreSQL
+psycopg2-binary==2.9.9
+SQLAlchemy==2.0.23
+
+# Machine Learning
+tensorflow==2.18.0
+numpy==1.24.3
+
+# Utilidades
+python-dotenv==1.0.0
+werkzeug==3.0.3
+
+# Para producción
+gunicorn==21.2.0
+
+# WebSocket (Threading mode - NO EventLet para Python 3.12)
+# Se usa el threading mode integrado de Flask-SocketIO

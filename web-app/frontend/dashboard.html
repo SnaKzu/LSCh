@@ -251,6 +251,9 @@
         </div>
     </footer>
 
+    <!-- Dashboard Data Script -->
+    <script src="/js/dashboard-data.js"></script>
+    
     <script>
         function toggleUserMenu() {
             const dropdown = document.getElementById('userDropdown');
@@ -267,25 +270,29 @@
             }
         });
 
-        // Color confidence badges
-        document.querySelectorAll('.confidence-badge').forEach(badge => {
-            const confidence = parseFloat(badge.dataset.confidence);
-            if (confidence >= 0.9) {
-                badge.classList.add('high');
-            } else if (confidence >= 0.7) {
-                badge.classList.add('medium');
-            } else {
-                badge.classList.add('low');
-            }
-        });
+        // Color confidence badges (executed after dynamic loading)
+        function colorConfidenceBadges() {
+            document.querySelectorAll('.confidence-badge').forEach(badge => {
+                const confidence = parseFloat(badge.dataset.confidence);
+                if (confidence >= 0.9) {
+                    badge.classList.add('high');
+                } else if (confidence >= 0.7) {
+                    badge.classList.add('medium');
+                } else {
+                    badge.classList.add('low');
+                }
+            });
+        }
 
-        // Set widths for top words from data-width attributes (avoids inline Jinja in style)
-        document.querySelectorAll('.word-fill').forEach(el => {
-            const w = el.dataset.width;
-            if (w !== undefined && w !== '') {
-                el.style.width = w + '%';
-            }
-        });
+        // Set widths for top words from data-width attributes
+        function animateWordBars() {
+            document.querySelectorAll('.word-fill').forEach(el => {
+                const w = el.dataset.width;
+                if (w !== undefined && w !== '') {
+                    el.style.width = w + '%';
+                }
+            });
+        }
 
         // Animate stats on load
         window.addEventListener('load', () => {
@@ -295,6 +302,12 @@
                     card.style.transform = 'translateY(0)';
                 }, index * 100);
             });
+            
+            // Execute coloring and animation after initial load
+            setTimeout(() => {
+                colorConfidenceBadges();
+                animateWordBars();
+            }, 1500);
         });
     </script>
 </body>

@@ -4,7 +4,7 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "pip install -r requirements_railway_threading.txt && cd web-app/backend && python app_railway_web.py",
+    "startCommand": "pip install -r requirements_railway_postgres.txt && cd web-app/backend && python app_railway_postgres.py",
     "healthcheckPath": "/api/health",
     "healthcheckTimeout": 300,
     "restartPolicyType": "ON_FAILURE",
